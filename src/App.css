@@ -1,0 +1,19 @@
+nav a {
+	color: white;
+	padding: 0.4rem 0.6rem;
+	text-decoration: none;
+}
+
+nav a.active {
+	color: palevioletred;
+	font-weight: bolder;
+}
+
+.dropdown a {
+	color: black;
+	display: block;
+}
+
+.dropdown div {
+	width: 230px;
+}
