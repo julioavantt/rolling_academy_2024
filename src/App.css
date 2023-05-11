@@ -17,3 +17,16 @@ nav a.active {
 .dropdown div {
 	width: 230px;
 }
+
+#cards {
+	gap: 1rem;
+}
+
+.img-wrapper {
+	height: 200px;
+	overflow: hidden;
+}
+
+#descriptione.card-text {
+	height: 120px;
+}

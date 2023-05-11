@@ -41,6 +41,7 @@ export const NavBar = () => {
 							<NavLink to="/registro">Registracao</NavLink>
 						</>
 					)}
+					<NavLink to="/courses">Courses</NavLink>
 					{localStorage.getItem("usuario") && (
 						<NavDropdown title="Cursos" id="basic-nav-dropdown">
 							{cursos?.map(curso => (
@@ -52,9 +53,14 @@ export const NavBar = () => {
 					)}
 				</Nav>
 				{localStorage.getItem("usuario") && (
-					<Button onClick={handleClick} variant="light">
-						Cerrare Sesione
-					</Button>
+					<>
+						<Nav>
+							<NavLink to="/administrator">Administrador</NavLink>
+						</Nav>
+						<Button onClick={handleClick} variant="light">
+							Cerrare Sesione
+						</Button>
+					</>
 				)}
 			</Container>
 		</Navbar>

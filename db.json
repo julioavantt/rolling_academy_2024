@@ -15,15 +15,6 @@
 	],
 	"cursos": [
 		{
-			"id": 2,
-			"title": "Curso Fundamentos Javascript",
-			"imagen": "https://s3-us-west-2.amazonaws.com/devcodepro/media/tutorials/funciones-en-javascript-t1.png",
-			"detalle": "JavaScript es el único lenguaje de programación que funciona en los navegadores de forma nativa (lenguaje interpretado sin necesidad de compilación). Por tanto se utiliza como complemento de HTML y CSS para crear páginas webs.",
-			"video": "https://www.youtube.com/embed/NmaHJxanMcA",
-			"mentor": "Julio Avantt",
-			"img_mentor": "http://1.gravatar.com/avatar/2bd6474c77fd501924adfa0aae631f57"
-		},
-		{
 			"id": 3,
 			"title": "Curso HTML5 desde cero a experto",
 			"imagen": "https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/styles/480/public/media/image/2014/07/52149-html5.jpg?itok=iZUNlvf7",
@@ -46,7 +37,12 @@
 		{
 			"id": 1,
 			"id_curso": 1,
-			"programa": ["Presentación de CSS", "Position", "Flex Box", "Responsive designe"]
+			"programa": [
+				"Presentación de CSS",
+				"Position",
+				"Flex Box",
+				"Responsive designe"
+			]
 		},
 		{
 			"id": 2,
