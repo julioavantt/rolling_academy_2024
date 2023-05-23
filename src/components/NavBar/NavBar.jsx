@@ -45,7 +45,7 @@ export const NavBar = () => {
 					{localStorage.getItem("usuario") && (
 						<NavDropdown title="Cursos" id="basic-nav-dropdown">
 							{cursos?.map(curso => (
-								<NavLink key={curso.id} to={`/curso/${curso.id}`}>
+								<NavLink key={curso.id} to={`/course/${curso.id}`}>
 									{curso.title}
 								</NavLink>
 							))}
@@ -54,9 +54,11 @@ export const NavBar = () => {
 				</Nav>
 				{localStorage.getItem("usuario") && (
 					<>
-						<Nav>
-							<NavLink to="/administrator">Administrador</NavLink>
-						</Nav>
+						{JSON.parse(localStorage.getItem("rol")) === "ADMIN" && (
+							<Nav>
+								<NavLink to="/administrator">Administrador</NavLink>
+							</Nav>
+						)}
 						<Button onClick={handleClick} variant="light">
 							Cerrare Sesione
 						</Button>

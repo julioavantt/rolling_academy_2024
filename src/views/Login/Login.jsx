@@ -33,9 +33,9 @@ export const Login = () => {
 
 	const handleClick = () =>
 		getUsuario(userEmail, userPassword).then(datos => {
-			const { password, ...rest } = datos[0]
-			//setUserData(datos)
+			const { password, rol, ...rest } = datos[0]
 			localStorage.setItem("usuario", JSON.stringify(rest))
+			localStorage.setItem("rol", JSON.stringify(rol))
 			navigate("/")
 		})
 

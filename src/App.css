@@ -30,3 +30,19 @@ nav a.active {
 #descriptione.card-text {
 	height: 120px;
 }
+
+#admin form div {
+	margin-bottom: 1rem;
+}
+
+#admin form div input,
+#admin form div textarea {
+	width: 700px;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+#admin form div label {
+	margin-right: 1rem;
+	width: 120px;
+}

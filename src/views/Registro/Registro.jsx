@@ -1,23 +1,81 @@
-import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+
 import Container from "react-bootstrap/Container"
 
-export const Registro = () => (
-	<Container className="mt-4">
-		<Form style={{ width: 500, margin: "auto" }}>
-			<h1>Registracao</h1>
-			<Form.Group className="mb-3" controlId="formBasicEmail">
-				<Form.Label>Email address</Form.Label>
-				<Form.Control type="email" placeholder="Enter email" />
-				<Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
-			</Form.Group>
-			<Form.Group className="mb-3" controlId="formBasicPassword">
-				<Form.Label>Password</Form.Label>
-				<Form.Control type="password" placeholder="Password" />
-			</Form.Group>
-			<Button variant="primary" type="submit">
-				Submit
-			</Button>
-		</Form>
-	</Container>
-)
+export const Registro = () => {
+	const [formValues, setFormValues] = useState({
+		usuario: "",
+		password: "",
+		rol: "USER_ROLE",
+	})
+
+	const navigate = useNavigate()
+
+	const postUsuario = async datos => {
+		const resp = await axios.post(`http://localhost:3005/usuarios`, datos)
+
+		const { status } = resp
+
+		if (status === 201) {
+			alert("yeah")
+			navigate("/login")
+		}
+	}
+
+	const handleChange = e => {
+		setFormValues({
+			...formValues,
+			[e.target.name]: e.target.value,
+		})
+	}
+
+	const handleSubmit = () => postUsuario(formValues)
+
+	return (
+		<Container className="mt-4">
+			<h1 className="mt-4 mb-4">Registracao</h1>
+			<form>
+				{[
+					{
+						label: "Email",
+						name: "usuario",
+						value: formValues.usuario,
+						type: "email",
+					},
+					{
+						label: "Password",
+						name: "password",
+						value: formValues.password,
+						type: "password",
+					},
+					{
+						label: "Rol",
+						name: "rol",
+						value: formValues.rol,
+						type: "text",
+					},
+				].map(input => (
+					<div className="form-group" key={input.label}>
+						<label className="text-muted">{input.label}</label>
+						<input
+							type={input.type}
+							className="form-control"
+							name={input.name}
+							value={input.value}
+							onChange={handleChange}
+						/>
+					</div>
+				))}
+				<button
+					type="button"
+					onClick={handleSubmit}
+					className="btn btn-info btn-block mt-4"
+				>
+					Registrarse
+				</button>
+			</form>
+		</Container>
+	)
+}

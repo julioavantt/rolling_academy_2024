@@ -23,6 +23,25 @@ export const Administrator = () => {
 		}
 	}
 
+	const updateCurso = async curso => {
+		if (!curso.mentor) {
+			alert("eh loco!")
+			return
+		} else {
+			const resp = await axios.put(
+				`http://localhost:3005/cursos/${curso.id}`,
+				curso
+			)
+			const { status } = resp
+
+			if (status === 200) {
+				const othersCourses = cursos.filter(prev => prev.id !== curso.id)
+				setCursos([...othersCourses, curso])
+			}
+			setShowForm(false)
+		}
+	}
+
 	const handleDelete = (id, title) => {
 		let validator = window.confirm(
 			`Está seguro que quiere eliminar el curso ${title}?`
@@ -36,7 +55,7 @@ export const Administrator = () => {
 	}
 
 	return (
-		<Container className="mt-4">
+		<Container className="mt-4" id="admin">
 			<h1>Admin</h1>
 			{!showForm && (
 				<table className="table">
@@ -77,14 +96,56 @@ export const Administrator = () => {
 			)}
 			{showForm && (
 				<form>
-					<label>T´tulo</label>
-					<input type="text" value={cursoEditable.title} />
-					<label>Desc</label>
-					<input type="text" value={cursoEditable.description} />
-					<label>Imagen</label>
-					<input type="text" value={cursoEditable.imagen} />
-					<label>Mentor</label>
-					<input type="text" value={cursoEditable.mentor} />
+					<div>
+						<label>Título</label>
+						<input
+							type="text"
+							value={cursoEditable.title}
+							onChange={event =>
+								setCursoEditable(prev => {
+									return { ...prev, title: event.target.value }
+								})
+							}
+						/>
+					</div>
+					<div>
+						<label>Desc</label>
+						<textarea
+							value={cursoEditable.detalle}
+							onChange={event =>
+								setCursoEditable(prev => {
+									return { ...prev, detalle: event.target.value }
+								})
+							}
+						></textarea>
+					</div>
+					<div>
+						<label>Imagen</label>
+						<input
+							type="text"
+							value={cursoEditable.imagen}
+							onChange={event =>
+								setCursoEditable(prev => {
+									return { ...prev, imagen: event.target.value }
+								})
+							}
+						/>
+					</div>
+					<div>
+						<label>Mentor</label>
+						<input
+							type="text"
+							value={cursoEditable.mentor}
+							onChange={event =>
+								setCursoEditable(prev => {
+									return { ...prev, mentor: event.target.value }
+								})
+							}
+						/>
+					</div>
+					<button type="button" onClick={() => updateCurso(cursoEditable)}>
+						Editar
+					</button>
 				</form>
 			)}
 		</Container>

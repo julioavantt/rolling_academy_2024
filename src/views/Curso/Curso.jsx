@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react"
 import { useParams, Link } from "react-router-dom"
 
+import { ButtonApp } from "../../components/Button/Button"
+
 export const Curso = () => {
 	const [curso, setCurso] = useState([])
 
 	const { cursoId } = useParams()
 
 	useEffect(() => {
-		fetch("http://localhost:3004/cursos")
+		fetch("http://localhost:3005/cursos")
 			.then(response => response.json())
 			.then(loquerecibo => {
 				const getCursoFromCursos = loquerecibo.find(
@@ -29,12 +31,13 @@ export const Curso = () => {
 							className="avatar"
 							src={curso.img_mentor}
 							alt={curso.mentor}
-						/>{" "}
+						/>
 						<span>{curso.mentor}</span>
 					</div>
 				</div>
 			</div>
 			<div className="row">
+				<ButtonApp text="hola" click={() => alert(1)} />
 				<div className="col-6">
 					<iframe
 						width="560"
