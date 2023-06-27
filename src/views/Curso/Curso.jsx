@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useParams, Link } from "react-router-dom"
 
-import { ButtonApp } from "../../components/Button/Button"
+import "../../css/curso.css"
 
 export const Curso = () => {
 	const [curso, setCurso] = useState([])
@@ -9,18 +9,13 @@ export const Curso = () => {
 	const { cursoId } = useParams()
 
 	useEffect(() => {
-		fetch("http://localhost:3005/cursos")
+		fetch("http://localhost:3331/api/read-course/" + cursoId)
 			.then(response => response.json())
-			.then(loquerecibo => {
-				const getCursoFromCursos = loquerecibo.find(
-					curso => curso.id === Number(cursoId)
-				)
-				setCurso(getCursoFromCursos)
-			})
+			.then(loquerecibo => setCurso(loquerecibo))
 	}, [cursoId])
 
 	return (
-		<div className="container mt-5">
+		<div className="container mt-5 curso">
 			<div className="row">
 				<div className="col">
 					<div className="my-4">
@@ -37,16 +32,9 @@ export const Curso = () => {
 				</div>
 			</div>
 			<div className="row">
-				<ButtonApp text="hola" click={() => alert(1)} />
 				<div className="col-6">
-					<iframe
-						width="560"
-						height="315"
-						src={curso.video}
-						title="YouTube video player"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					></iframe>
-					<p>{curso.detalle}</p>
+					<img src={curso.img} alt={curso.mentor} width="100%" />
+					<p>{curso.detail}</p>
 				</div>
 				<div className="col-6">
 					<div className="card ml-3 w-100">

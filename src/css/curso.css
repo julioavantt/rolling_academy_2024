@@ -1,9 +1,17 @@
-.avatar{
-    border-radius: 100%;
-    width: 30px;
-    border: 2px solid rgb(34, 155, 211);
+.avatar {
+	border-radius: 100%;
+	width: 45px;
+	height: 45px;
+	border: 2px solid rgb(34, 155, 211);
+	margin-right: 0.7rem;
+	margin-bottom: 1rem;
 }
-.card{
-    border-radius: 10px;
-height: 315px;
+.curso {
+	border-radius: 10px;
+	height: 315px;
+}
+
+.curso p {
+	margin-top: 1rem;
+	font-size: 1rem;
 }

@@ -46,3 +46,13 @@ nav a.active {
 	margin-right: 1rem;
 	width: 120px;
 }
+
+input.error {
+	border: 1px solid red;
+	background-color: #ffaaaa;
+}
+
+.errorMessage {
+	color: red;
+	padding-top: 5px;
+}

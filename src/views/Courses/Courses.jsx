@@ -6,24 +6,25 @@ import Nav from "react-bootstrap/Nav"
 import { CardApp } from "./components/CardApp"
 
 export const Courses = () => {
-	const [cursos, setCursos] = useState([]) // 2
+	const [cursos, setCursos] = useState([])
 	const [cursosRender, setCursosRender] = useState([])
 	const [term, setTerm] = useState("")
 
 	useEffect(() => {
-		fetch(`http://localhost:${import.meta.env.VITE_PORT}/cursos`)
+		fetch(`http://localhost:3331/api/read-courses`)
 			.then(response => response.json())
 			.then(loquerecibo => {
 				setCursos(loquerecibo)
 				setCursosRender(loquerecibo)
+				console.log(loquerecibo)
 			})
 	}, [])
 
 	const handleSearch = () => {
-		const curssosFiltrados = cursos.filter(curso =>
+		const cursosFiltrados = cursos.filter(curso =>
 			curso.title.startsWith(term)
 		)
-		setCursosRender(curssosFiltrados)
+		setCursosRender(cursosFiltrados)
 	}
 
 	const handleReset = () => {
@@ -52,7 +53,7 @@ export const Courses = () => {
 			</Nav>
 			<Container id="cards" className="p-2 mt-4 float-start">
 				{cursosRender.map(curso => (
-					<CardApp curso={curso} />
+					<CardApp key={curso.id} curso={curso} />
 				))}
 			</Container>
 		</Container>

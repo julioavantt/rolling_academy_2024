@@ -1,67 +1,98 @@
-import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useFormik } from "formik"
+import * as Yup from "yup"
 import axios from "axios"
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import Container from "react-bootstrap/Container"
 
-export const getUsuario = async (mail, password) => {
-	// console.log(mail)
-	const resp = await axios(`http://localhost:3005/usuarios?usuario=${mail}`)
+const validationSchema = () =>
+	Yup.object().shape({
+		email: Yup.string()
+			.email("Debe ser un email válido")
+			.required("* Campo obligatorio"),
+		password: Yup.string().required("* Campo obligatorio"),
+	})
 
-	const { data } = resp
-	// console.log(data)
+const initialValues = {
+	email: "",
+	password: "",
+}
 
-	if (data.length > 0) {
-		let validar = data.find(user => {
-			return user.password === password
-		})
+export const getUsuario = async (email, password) => {
+	const response = await axios.post(`http://localhost:3331/api/login`, {
+		email,
+		password,
+	})
 
-		if (validar) {
-			return data
-		} else {
-			return []
-		}
-	}
+	return response.data
 }
 
 export const Login = () => {
-	const [userEmail, setUserEmail] = useState("")
-	const [userPassword, setUserPassword] = useState("")
-
 	const navigate = useNavigate()
 
-	const handleClick = () =>
-		getUsuario(userEmail, userPassword).then(datos => {
-			const { password, rol, ...rest } = datos[0]
-			localStorage.setItem("usuario", JSON.stringify(rest))
-			localStorage.setItem("rol", JSON.stringify(rol))
-			navigate("/")
-		})
+	const onSubmit = () =>
+		getUsuario(email, password)
+			.then(data => {
+				localStorage.setItem("user", JSON.stringify(data.user))
+				localStorage.setItem("token", JSON.stringify(data.token))
+				navigate("/")
+			})
+			.catch(err => {
+				if (err.response.status === 401) alert("credenciales inválidas")
+			})
+
+	const formik = useFormik({
+		initialValues,
+		enableReinitialize: true,
+		validationSchema,
+		onSubmit,
+	})
 
 	return (
 		<Container className="mt-4">
-			<Form style={{ width: 500, margin: "auto" }}>
+			<Form
+				style={{ width: 500, margin: "auto" }}
+				onSubmit={formik.handleSubmit}
+			>
 				<h1>Iniciar sesión</h1>
 				<Form.Group className="mb-3" controlId="formBasicEmail">
 					<Form.Label>Email address</Form.Label>
 					<Form.Control
 						type="email"
+						className={
+							formik.errors.email && formik.touched.email && "error"
+						}
 						placeholder="Enter email"
-						value={userEmail}
-						onChange={event => setUserEmail(event.target.value)}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
+						name="email"
+						value={formik.values.email}
 					/>
+					{formik.errors.email && (
+						<div className="errorMessage">{formik.errors.email}</div>
+					)}
 				</Form.Group>
 				<Form.Group className="mb-3" controlId="formBasicPassword">
 					<Form.Label>Password</Form.Label>
 					<Form.Control
+						name="password"
+						className={
+							formik.errors.password &&
+							formik.touched.password &&
+							"error"
+						}
 						type="password"
 						placeholder="Password"
-						value={userPassword}
-						onChange={event => setUserPassword(event.target.value)}
+						value={formik.values.password}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
 					/>
+					{formik.errors.password && (
+						<div className="errorMessage">{formik.errors.password}</div>
+					)}
 				</Form.Group>
-				<Button onClick={handleClick} variant="primary" type="button">
+				<Button variant="primary" type="submit">
 					Submit
 				</Button>
 			</Form>

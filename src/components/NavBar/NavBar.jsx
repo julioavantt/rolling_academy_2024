@@ -8,7 +8,7 @@ import Navbar from "react-bootstrap/Navbar"
 import Button from "react-bootstrap/Button"
 
 const getCursos = async () => {
-	const resp = await axios(`http://localhost:3005/cursos`)
+	const resp = await axios(`http://localhost:3331/api/read-courses`)
 	const { data } = resp
 	// console.log(data)
 	return data
@@ -19,7 +19,7 @@ export const NavBar = () => {
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		if (localStorage.getItem("usuario")) {
+		if (localStorage.getItem("user")) {
 			getCursos().then(cursos => setCursos(cursos))
 		}
 	}, [])
@@ -35,14 +35,14 @@ export const NavBar = () => {
 				<Navbar.Brand href="#home">Academia cualquier cosa</Navbar.Brand>
 				<Nav className="me-auto">
 					<NavLink to="/">Home</NavLink>
-					{!localStorage.getItem("usuario") && (
+					{!localStorage.getItem("user") && (
 						<>
 							<NavLink to="/login">Login</NavLink>
 							<NavLink to="/registro">Registracao</NavLink>
 						</>
 					)}
 					<NavLink to="/courses">Courses</NavLink>
-					{localStorage.getItem("usuario") && (
+					{localStorage.getItem("user") && (
 						<NavDropdown title="Cursos" id="basic-nav-dropdown">
 							{cursos?.map(curso => (
 								<NavLink key={curso.id} to={`/course/${curso.id}`}>
@@ -52,7 +52,7 @@ export const NavBar = () => {
 						</NavDropdown>
 					)}
 				</Nav>
-				{localStorage.getItem("usuario") && (
+				{localStorage.getItem("user") && (
 					<>
 						{JSON.parse(localStorage.getItem("rol")) === "ADMIN" && (
 							<Nav>
