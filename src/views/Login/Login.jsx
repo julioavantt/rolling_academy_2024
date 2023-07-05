@@ -20,10 +20,13 @@ const initialValues = {
 }
 
 export const getUsuario = async (email, password) => {
-	const response = await axios.post(`http://localhost:3331/api/login`, {
-		email,
-		password,
-	})
+	const response = await axios.post(
+		`${import.meta.env.VITE_SERVER_URI}/api/login`,
+		{
+			email,
+			password,
+		}
+	)
 
 	return response.data
 }
@@ -31,16 +34,18 @@ export const getUsuario = async (email, password) => {
 export const Login = () => {
 	const navigate = useNavigate()
 
-	const onSubmit = () =>
-		getUsuario(email, password)
+	const onSubmit = () => {
+		getUsuario(formik.values.email, formik.values.password)
 			.then(data => {
 				localStorage.setItem("user", JSON.stringify(data.user))
-				localStorage.setItem("token", JSON.stringify(data.token))
+				localStorage.setItem("role", data.user.role)
+				localStorage.setItem("token", data.token)
 				navigate("/")
 			})
 			.catch(err => {
 				if (err.response.status === 401) alert("credenciales inválidas")
 			})
+	}
 
 	const formik = useFormik({
 		initialValues,

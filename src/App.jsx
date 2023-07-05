@@ -12,3 +12,7 @@ export default function App() {
 		</BrowserRouter>
 	)
 }
+
+let soyUnNumero = true
+
+soyUnNumero = "hola"

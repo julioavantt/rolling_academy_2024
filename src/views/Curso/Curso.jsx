@@ -9,7 +9,7 @@ export const Curso = () => {
 	const { cursoId } = useParams()
 
 	useEffect(() => {
-		fetch("http://localhost:3331/api/read-course/" + cursoId)
+		fetch(`${import.meta.env.VITE_SERVER_URI}/api/read-course/${cursoId}`)
 			.then(response => response.json())
 			.then(loquerecibo => setCurso(loquerecibo))
 	}, [cursoId])

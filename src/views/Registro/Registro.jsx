@@ -17,7 +17,7 @@ export const Registro = () => {
 
 	const postUsuario = async () => {
 		const resp = await axios.post(
-			`http://localhost:3331/api/create-user`,
+			`${import.meta.env.VITE_SERVER_URI}/api/create-user`,
 			formValues
 		)
 

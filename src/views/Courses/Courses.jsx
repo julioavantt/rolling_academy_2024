@@ -11,7 +11,7 @@ export const Courses = () => {
 	const [term, setTerm] = useState("")
 
 	useEffect(() => {
-		fetch(`http://localhost:3331/api/read-courses`)
+		fetch(`${import.meta.env.VITE_SERVER_URI}/api/read-courses`)
 			.then(response => response.json())
 			.then(loquerecibo => {
 				setCursos(loquerecibo)

@@ -5,7 +5,7 @@ export const IsAdmin = ({ children }) => {
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		if (JSON.parse(localStorage.getItem("rol")) !== "ADMIN") navigate("/")
+		if (localStorage.getItem("role") !== "admin") navigate("/")
 	})
 
 	return children

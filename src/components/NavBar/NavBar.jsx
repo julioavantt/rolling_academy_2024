@@ -8,7 +8,9 @@ import Navbar from "react-bootstrap/Navbar"
 import Button from "react-bootstrap/Button"
 
 const getCursos = async () => {
-	const resp = await axios(`http://localhost:3331/api/read-courses`)
+	const resp = await axios(
+		`${import.meta.env.VITE_SERVER_URI}/api/read-courses`
+	)
 	const { data } = resp
 	// console.log(data)
 	return data
@@ -54,7 +56,7 @@ export const NavBar = () => {
 				</Nav>
 				{localStorage.getItem("user") && (
 					<>
-						{JSON.parse(localStorage.getItem("rol")) === "ADMIN" && (
+						{localStorage.getItem("role") === "admin" && (
 							<Nav>
 								<NavLink to="/administrator">Administrador</NavLink>
 							</Nav>
